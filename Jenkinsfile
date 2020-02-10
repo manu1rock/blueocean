@@ -6,6 +6,12 @@ pipeline {
   jdk 'java 8'
   }
  
+ parameters {
+  booleanParam(name: "RELEASE",
+               description: "Build a release from current commit.",
+               defaultValue: false)
+    }
+ 
  stages {
   stage ("initialize") {
    steps {
