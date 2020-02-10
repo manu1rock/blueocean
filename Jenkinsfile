@@ -5,7 +5,7 @@ pipeline {
   stage ("Build") {
    steps {
     script {
-     rtMaven.run pom: 'pom.xml', goals: 'compile', buildInfo: buildInfo
+     'mvn compile', buildInfo: buildInfo
     }    
     }
   }
@@ -13,7 +13,7 @@ pipeline {
   stage ("Test") {
    steps {
     script {
-     rtMaven.run pom: 'pom.xml', goals: 'test', buildInfo: buildInfo
+     'mvn test', buildInfo: buildInfo
     }    
     }
   }
