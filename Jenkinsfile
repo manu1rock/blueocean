@@ -26,7 +26,7 @@ pipeline {
  stage ('Build project') {
   steps {
    dir("blueocean"){
-    sh 'mvn clean verify
+    sh 'mvn clean verify'
     }
    }
   }
