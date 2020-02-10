@@ -5,7 +5,7 @@ pipeline {
   stage ("Build") {
    steps {
     script {
-     'mvn compile', buildInfo: buildInfo
+     sh 'mvn compile', buildInfo: buildInfo
     }    
     }
   }
@@ -13,7 +13,7 @@ pipeline {
   stage ("Test") {
    steps {
     script {
-     'mvn test', buildInfo: buildInfo
+     sh 'mvn test', buildInfo: buildInfo
     }    
     }
   }
