@@ -11,7 +11,7 @@ pipeline {
   stage ("Build") {
    steps {
     script {
-     sh 'mvn compile'
+     bat 'mvn compile'
     }    
     }
   }
@@ -19,7 +19,7 @@ pipeline {
   stage ("Test") {
    steps {
     script {
-     sh 'mvn test'
+     bat 'mvn test'
     }    
     }
   }
