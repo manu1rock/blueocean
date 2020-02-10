@@ -27,7 +27,7 @@ pipeline {
    stage ("Deploy") {
    steps {
     script {
-     bat "echo '<h1>${env.BUILD_DISPLAY_NAME}</h1>' >> app/index.html"
+     bat "echo ${env.BUILD_DISPLAY_NAME}"
     }    
     }
   }
