@@ -56,5 +56,13 @@ pipeline {
  
 }
  
-  
-  
+ @NonCPS
+
+// Fetching change set from Git
+def getChangeSet() {
+  return currentBuild.changeSets.collect { cs ->
+    cs.collect { entry ->
+        "* ${entry.author.fullName}: ${entry.msg}"
+    }.join("\n")
+  }.join("\n")
+} 
