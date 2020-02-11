@@ -12,6 +12,8 @@ pipeline {
    steps {
     script {
      bat 'mvn compile'
+     bat 'make' 
+     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }    
     }
   }
