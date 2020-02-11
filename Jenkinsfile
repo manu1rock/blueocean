@@ -12,7 +12,6 @@ pipeline {
    steps {
     script {
      bat 'mvn compile'
-     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }    
     }
   }
@@ -36,7 +35,7 @@ pipeline {
  
  post {
   success {
-      echo "SUCCESS"
+      echo "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
     }
   failure {
       echo "FAILURE"
