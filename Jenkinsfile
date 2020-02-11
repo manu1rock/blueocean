@@ -4,9 +4,8 @@ pipeline {
  stages {
   stage ("Git checkout") {
    steps {
-     git 'https://github.com/manu1rock/blueocean.git'    
-     def changeSet = getChangeSet()
-     bat "echo ${changeSet}"
+     git 'https://github.com/manu1rock/blueocean.git'  
+     bat "echo ${getChangeSet()}"
     }
   }
   
