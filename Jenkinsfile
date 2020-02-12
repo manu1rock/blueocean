@@ -26,14 +26,14 @@ pipeline {
                     // Read the download and upload specs:
                  def downloadSpec = """{
                  "files": [{
-                             "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                             "pattern": "libs-snapshot-local/*.jar",
                              "target": "libs-release-local/",
                              "props": "p1=v1;p2=v2"
                            }]
                                         }"""
                     def uploadSpec = """{
                     "files": [{
-                       "pattern": "libs-release-local/",
+                       "pattern": "libs-release-local/*.jar",
                        "target": "libs-release-local/"
                     }]
                  }"""
