@@ -27,14 +27,14 @@ pipeline {
                  def downloadSpec = """{
                  "files": [{
                              "pattern": "libs-snapshot-local/*(Pipeline).zip",
-                             "target": "target/",
+                             "target": "libs-release-local/",
                              "props": "p1=v1;p2=v2"
                            }]
                                         }"""
                     def uploadSpec = """{
                     "files": [{
-                       "pattern": "target/",
-                       "target": "target/"
+                       "pattern": "libs-release-local/",
+                       "target": "libs-release-local/"
                     }]
                  }"""
 
