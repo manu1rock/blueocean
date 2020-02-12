@@ -24,7 +24,13 @@ pipeline {
                     def server = Artifactory.server 'Artifactory Version 6.17.0'
 
                     // Read the download and upload specs:
-                    //def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
+                 def downloadSpec = """{
+                 "files": [{
+                             "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                             "target": "target/",
+                             "props": "p1=v1;p2=v2"
+                           }]
+                                        }"""
                     def uploadSpec = """{
                     "files": [{
                        "pattern": "target/",
