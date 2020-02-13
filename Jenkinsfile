@@ -14,7 +14,7 @@ pipeline {
                 rtServer (
                     id: "Art_6.17.0",
                     url: 'http://localhost:8040/artifactory',
-                    username: 'tesuser'
+                    username: 'tesuser',
                     password: 'Testing@20'
                 )
 
