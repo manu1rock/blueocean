@@ -9,46 +9,48 @@ pipeline {
     }
   }  
   
-  stage ("Build") {
-   steps {
-    script {
-     bat 'mvn clean install package'
-    }    
-    }
-  }
-  
-  stage('Artifactory upload'){
+  stage ('Artifactory configuration') {
             steps {
-                script{
-                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-                    def server = Artifactory.server 'Artifactory Version 6.17.0'
+                rtServer (
+                    id: "Art_6.17.0",
+                    url: 'http://localhost:8040/artifactory',
+                    username: 'tesuser'
+                    password: 'Testing@20'
+                )
 
-                    // Read the download and upload specs:
-                 def downloadSpec = """{
-                 "files": [{
-                             "pattern": "libs-snapshot-local/*.jar",
-                             "target": "libs-release-local/",
-                             "props": "p1=v1;p2=v2"
-                           }]
-                                        }"""
-                    def uploadSpec = """{
-                    "files": [{
-                       "pattern": "libs-release-local/*.jar",
-                       "target": "libs-release-local/"
-                    }]
-                 }"""
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: "http://localhost:8040/artifactory",
+                    releaseRepo: "libs-release-local",
+                    snapshotRepo: "libs-snapshot-local"
+                )
 
-                    // Download files from Artifactory:
-                    def buildInfo1 = server.download spec: downloadSpec
-                    // Upload files to Artifactory:
-                    def buildInfo2 = server.upload spec: uploadSpec
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",
+                    serverId: "http://localhost:8040/artifactory",
+                    releaseRepo: "libs-release",
+                    snapshotRepo: "libs-snapshot"
+                )
+            }
+        }
 
-                    // Merge the local download and upload build-info instances:
-                    buildInfo1.append buildInfo2
+        stage ('Exec Maven') {
+            steps {
+                rtMavenRun (
+                    tool: 'M3', // Tool name from Jenkins configuration
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER",
+                    resolverId: "MAVEN_RESOLVER"
+                )
+            }
+        }
 
-                    // Publish the merged build-info to Artifactory
-                    server.publishBuildInfo buildInfo1
-                }
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "http://localhost:8040/artifactory"
+                )
             }
         }
   
@@ -60,13 +62,7 @@ pipeline {
     }
   }
  
-   stage ("Deploy") {
-   steps {
-    script {
-     bat "echo ${env.BUILD_DISPLAY_NAME}"
-    }    
-    }
-  }
+   
  }
  
  post {
