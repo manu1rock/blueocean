@@ -13,21 +13,21 @@ pipeline {
             steps {
                 rtServer (
                     id: "Art_6.17.0",
-                    url: 'http://localhost:8040/artifactory',
+                    url: 'http://localhost:8040/artifactory/',
                     username: 'tesuser',
                     password: 'Testing@20'
                 )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
-                    serverId: "http://localhost:8040/artifactory",
+                    serverId: "http://localhost:8040/artifactory/",
                     releaseRepo: "libs-release-local",
                     snapshotRepo: "libs-snapshot-local"
                 )
 
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",
-                    serverId: "http://localhost:8040/artifactory",
+                    serverId: "http://localhost:8040/artifactory/",
                     releaseRepo: "libs-release",
                     snapshotRepo: "libs-snapshot"
                 )
@@ -49,7 +49,7 @@ pipeline {
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "http://localhost:8040/artifactory"
+                    serverId: "http://localhost:8040/artifactory/"
                 )
             }
         }
