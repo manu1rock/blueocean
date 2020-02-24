@@ -1,17 +1,8 @@
-FROM ubuntu:latest
-
-MAINTAINER manoj1yadav <manuvns.manoj@gmail.com>
-
-WORKDIR /usr/apps/hello-docker/
-
-RUN apt-get -y update
-
-RUN apt-get install -y nodejs
-
-RUN apt-get install -y npm
-
-RUN npm install -g http-server
-
-ADD . /usr/apps/hello-docker/
-
-CMD ["http-server", "-s"]
+FROM alpine
+MAINTAINER manoj1yadav<manuvns.manoj@gmail.com>
+RUN apk --update nodejs nodes-npm
+COPY ./src
+WORKDIR /src
+RUN npm install
+EXPOSE 8085
+ENTRYPOINT ["node", "./app.js"]
